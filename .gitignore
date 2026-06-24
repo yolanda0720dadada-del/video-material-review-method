@@ -1,0 +1,11 @@
+.DS_Store
+outputs/
+raw/
+素材/
+*.mov
+*.mp4
+*.m4v
+*.jpg
+*.jpeg
+*.png
+*.heic

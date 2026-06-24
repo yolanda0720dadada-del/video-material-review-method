@@ -1,6 +1,6 @@
 # Vlog Material Review Method
 
-一套用于 Vlog / 旅行视频 / 探店视频粗剪前的素材整理方法。
+一套用于 Vlog / 旅行视频 / 探店视频粗剪前的素材整理方法和可复用工具包。
 
 它的目标不是把每条素材写成复杂影评，而是在正式剪辑前，把大量原始视频整理成一张可检索、可筛选、可进入剪映 / Premiere / Final Cut 粗剪的素材表。
 
@@ -43,6 +43,66 @@
 | IMG_0003.MOV | 2026-04-02 13:46 | 15.6 秒 | Set 002：行李托运 | 托运很方便，原本以为要排很久，结果基本不用排队。 | 1 张代表截图 |
 
 剪辑时，`IMG_0002.MOV` 和 `IMG_0003.MOV` 属于同一个 Set，不一定都要用，可以按画面、口播自然度和节奏择优。
+
+## 一键使用
+
+### 1. 安装依赖
+
+先安装 `ffmpeg`：
+
+```bash
+brew install ffmpeg
+```
+
+安装 Python 依赖：
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+如果需要本地口播识别，再安装可选依赖：
+
+```bash
+pip install faster-whisper
+```
+
+### 2. 复制配置
+
+```bash
+cp examples/project_config.example.json my_project.json
+```
+
+编辑 `my_project.json`，填入素材目录、项目名称、重要地点、人名和专有词。
+
+### 3. 生成素材表
+
+```bash
+python tools/vlog_material_review.py my_project.json
+```
+
+默认会输出：
+
+- `rows.json`：结构化素材数据
+- `material_review.csv`：表格数据
+- `material_review.md`：Markdown 表格
+- `material_review.html`：带截图的本地预览页
+- `frames/`：代表截图
+
+## 工具链说明
+
+默认工具链不依赖云端 API：
+
+| 任务 | 默认工具 | 说明 |
+|---|---|---|
+| 读取拍摄时间 / 时长 | `ffprobe` | 来自 ffmpeg |
+| 抽代表截图 | `ffmpeg` | 每条素材抽 1-3 张 |
+| 生成表格 | Python 标准库 | 输出 JSON / CSV / Markdown / HTML |
+| 口播识别 | 可选 `faster-whisper` | 本地 Whisper，适合先生成底稿 |
+| 画面理解 | 代表帧 + 人工/AI 校正 | 默认不绑定特定云服务 |
+
+这套工具会先生成可复核的本地预览。更强的 AI 视觉理解、云端 ASR、飞书/Notion 写入，可以在这个结果基础上扩展。
 
 ## 使用流程
 
@@ -96,6 +156,10 @@
 完整方法见：
 
 [templates/video_material_review_method.md](templates/video_material_review_method.md)
+
+工具链说明见：
+
+[docs/tooling.md](docs/tooling.md)
 
 ## 开源许可
 

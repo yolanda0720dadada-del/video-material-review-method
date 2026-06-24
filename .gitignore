@@ -9,3 +9,6 @@ raw/
 *.jpeg
 *.png
 *.heic
+__pycache__/
+*.pyc
+.venv/

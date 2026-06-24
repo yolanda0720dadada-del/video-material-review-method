@@ -62,10 +62,23 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+检查环境：
+
+```bash
+bash scripts/preflight.sh
+```
+
 如果需要本地口播识别，再安装可选依赖：
 
 ```bash
-pip install faster-whisper
+pip install -r requirements-transcription.txt
+```
+
+也可以把工具安装成命令：
+
+```bash
+pip install -e .
+vlog-material-review examples/project_config.example.json
 ```
 
 ### 2. 复制配置
@@ -103,6 +116,17 @@ python tools/vlog_material_review.py my_project.json
 | 画面理解 | 代表帧 + 人工/AI 校正 | 默认不绑定特定云服务 |
 
 这套工具会先生成可复核的本地预览。更强的 AI 视觉理解、云端 ASR、飞书/Notion 写入，可以在这个结果基础上扩展。
+
+## Agent / Skill 用法
+
+这个仓库也可以作为 Agent skill 使用。核心入口文件：
+
+- `SKILL.md`：告诉 Agent 什么时候使用、如何对话、如何运行。
+- `RULES.md`：素材整理的硬规则，尤其是 Set、截图、口播清洗。
+- `CATALOG.md`：不同项目可选的整理模式。
+- `scripts/preflight.sh`：前置依赖检查。
+
+如果你的 Agent 支持从 GitHub 安装 skill，可以安装本仓库后直接让它读取 `SKILL.md`。
 
 ## 使用流程
 
@@ -160,6 +184,42 @@ python tools/vlog_material_review.py my_project.json
 工具链说明见：
 
 [docs/tooling.md](docs/tooling.md)
+
+AI 辅助流程见：
+
+[docs/ai-workflow.md](docs/ai-workflow.md)
+
+输出数据结构见：
+
+[docs/output-schema.md](docs/output-schema.md)
+
+## 目录结构
+
+```text
+.
+├── README.md
+├── tools/
+│   └── vlog_material_review.py
+├── scripts/
+│   └── preflight.sh
+├── examples/
+│   └── project_config.example.json
+├── templates/
+│   └── video_material_review_method.md
+├── docs/
+│   ├── tooling.md
+│   ├── ai-workflow.md
+│   └── output-schema.md
+├── requirements.txt
+├── requirements-transcription.txt
+├── pyproject.toml
+├── SKILL.md
+├── RULES.md
+├── CATALOG.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+└── LICENSE
+```
 
 ## 开源许可
 

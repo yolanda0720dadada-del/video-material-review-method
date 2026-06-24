@@ -1,1 +1,2 @@
-jinja2>=3.1.0
+# No required Python dependencies for the default local workflow.
+# Optional transcription dependencies live in requirements-transcription.txt.

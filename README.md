@@ -44,7 +44,7 @@
 
 整理完成后的表格效果示意：
 
-![整理完成后的素材表示意图](docs/assets/material-review-example.png)
+![整理完成后的素材表示意图](docs/assets/material-review-example.svg)
 
 ## 一键使用
 
